@@ -78,6 +78,8 @@ private:
         mhal::encoder_write(&enc_, 0);
     }
 
+    DeepSleepLock lock;
+
     mhal::encoder_t enc_;
  
     mstd::atomic<T> accumulated_ticks_; // ISR atomicity required here because the read has to be atomic
