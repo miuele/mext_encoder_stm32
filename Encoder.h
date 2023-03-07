@@ -58,8 +58,8 @@ class Encoder {
 public:
 	static_assert(std::is_integral<T>::value, "T must be integral");
 
-	explicit Encoder(PinName pin1, PinName pin2)
-		: accumulated_ticks_(0), qei_(pin1, pin2)
+	explicit Encoder(PinName pin1, PinName pin2, int offset = 0)
+		: accumulated_ticks_(offset), qei_(pin1, pin2)
 	{
 	}
 
@@ -79,15 +79,11 @@ public:
 		qei_.write_zero();
 	}
  
-	void reset(int offset) {
+	void reset(int offset = 0) {
 		CriticalSectionLock lock;
 
 		accumulated_ticks_ = offset;
 		qei_.write_zero();
-	}
-
-	void reset() {
-		reset(0);
 	}
  
 private:
