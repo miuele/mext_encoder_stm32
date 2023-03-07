@@ -79,11 +79,15 @@ public:
 		qei_.write_zero();
 	}
  
-	void reset() {
+	void reset(int offset) {
 		CriticalSectionLock lock;
 
-		accumulated_ticks_ = 0;
+		accumulated_ticks_ = offset;
 		qei_.write_zero();
+	}
+
+	void reset() {
+		reset(0);
 	}
  
 private:
